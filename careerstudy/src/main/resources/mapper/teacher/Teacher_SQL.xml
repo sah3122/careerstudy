@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="teacher">
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectTeacherList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	USER_IDX,
+                USER_NAME,
+                (SELECT SCHOOL_NAME 
+                 FROM school_info 
+                 WHERE SCHOOL_IDX = USER_SCHOOL) as USER_SCHOOL,
+                (SELECT AREA_NAME 
+                 FROM area_info 
+                 WHERE AREA_IDX = USER_AREA) as USER_AREA,
+                USER_TEL_NUM,
+                USER_INSERT_DATE
+            FROM
+                career_user 
+            WHERE USER_CODE = '001'
+            AND USER_DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <select id="selectTeacher" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	USER_IDX,
+            	USER_ID,
+                USER_NAME,
+                (SELECT SCHOOL_NAME 
+                 FROM school_info 
+                 WHERE SCHOOL_IDX = USER_SCHOOL) as USER_SCHOOL,
+                USER_AREA,
+                USER_TEL_NUM,
+                USER_EMAIL,
+                USER_INSERT_DATE
+            FROM
+                career_user 
+            WHERE USER_IDX = #{teacher_idx}
+            AND USER_DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <insert id="insertTeacher" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO career_user
+		       (
+		           USER_ID,
+		           USER_PW,
+		           USER_NAME,
+		           USER_TEL_NUM,
+		           USER_AREA,
+		           USER_EMAIL,
+		           USER_SCHOOL,
+		           USER_DELETE_AT,
+		           USER_CODE,
+		           USER_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{teacher_id},
+		           #{teacher_pass},
+		           #{teacher_name},
+		           #{teacher_tel},
+		           #{teacher_area},
+		           #{teacher_email},
+		           (select max(school_idx) 
+		           	from school_info),
+		           'N',
+		           '001',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <insert id="insertSchool" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO school_info
+		       (
+		           SCHOOL_NAME,
+		           SCHOOL_AREA
+		       ) 
+		       VALUES
+		       (
+		           #{teacher_school},
+		           #{teacher_area}
+		       )  
+        ]]>
+    </insert>
+	
+	<select id="selectUserId" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                USER_ID
+            FROM
+                career_user
+            WHERE USER_ID = #{teacher_id}
+            AND USER_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<update id="updateTeacher" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	  	 	   <if test="password_check.equals('true')">
+	  	 	   USER_PW = #{teacher_pass},
+	  	 	   </if>
+	           USER_NAME = #{teacher_name},
+	           USER_TEL_NUM = #{teacher_tel},
+	           USER_EMAIL = #{teacher_email},
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{teacher_idx}	       
+    </update>
+    
+    <update id="deleteTeacher" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	  	 	   USER_DELETE_AT = 'Y',
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{teacher_idx}	       
+    </update>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!-- default : 템플릿에 설정된 페이지의 구성 요소에 대한 실제 파일을 지정합니다.  -->
+	<definition name="admin" template="/WEB-INF/layouts/admin_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/layouts/admin/header.jsp" />
+		<put-attribute name="top_menu"  value="/WEB-INF/layouts/admin/top_menu.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/layouts/admin/menu.jsp" />
+	</definition>
+	
+	<definition name="career" template="/WEB-INF/layouts/career_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/layouts/career/header.jsp" />
+		<put-attribute name="top_menu"  value="/WEB-INF/layouts/career/top_menu.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/layouts/career/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/career/footer.jsp" />
+		<put-attribute name="sns" value="/WEB-INF/layouts/career/sns.jsp" />
+	</definition>
+	
+	<definition name="/admin/login/login_main" template="/WEB-INF/layouts/login_template.jsp">
+		<put-attribute name="body" value="/WEB-INF/system/admin/login/login_main.jsp" />
+	</definition>
+	 
+	<!--  default를 확장하여 test 라는 URL로 시작되는 호출이 오는 경우 아래 설정에 의해서 페이지를 만들게 됩니다. -->
+	<definition name="/admin/main/admin_main" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/main/admin_main.jsp" />
+	</definition>
+	
+	<definition name="/admin/forms" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/forms.jsp" />
+	</definition>
+	
+	<!--  teacher -->
+	<definition name="/admin/teacher/teacher_insert" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/teacher/teacher_insert.jsp" />
+	</definition>
+	
+	<definition name="/admin/teacher/teacher_detail" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/teacher/teacher_detail.jsp" />
+	</definition>
+	
+	<definition name="/admin/teacher/teacher_update" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/teacher/teacher_update.jsp" />
+	</definition>
+	
+	<definition name="/admin/teacher/teacher_list" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/teacher/teacher_list.jsp" />
+	</definition>
+	
+	<!-- notice -->
+	<definition name="/admin/notice/notice_list" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/notice/notice_list.jsp" />
+	</definition>
+	
+	<definition name="/admin/notice/notice_insert" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/notice/notice_insert.jsp" />
+	</definition>
+	
+	<definition name="/admin/notice/notice_detail" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/notice/notice_detail.jsp" />
+	</definition>
+	
+	<definition name="/admin/notice/notice_update" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/notice/notice_update.jsp" />
+	</definition>
+	
+	<!-- gallery -->
+	<definition name="/admin/gallery/gallery_list" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/gallery/gallery_list.jsp" />
+	</definition>
+	
+	<definition name="/admin/gallery/gallery_insert" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/gallery/gallery_insert.jsp" />
+	</definition>
+	
+	<definition name="/admin/gallery/gallery_detail" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/gallery/gallery_detail.jsp" />
+	</definition>
+	
+	<definition name="/admin/gallery/gallery_update" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/gallery/gallery_update.jsp" />
+	</definition>
+	
+	<!-- video -->
+	<definition name="/admin/video/video_list" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/video/video_list.jsp" />
+	</definition>
+	
+	<definition name="/admin/video/video_insert" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/video/video_insert.jsp" />
+	</definition>
+	
+	<definition name="/admin/video/video_detail" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/video/video_detail.jsp" />
+	</definition>
+	
+	<definition name="/admin/video/video_update" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/video/video_update.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 운영   -->
+	<definition name="/career/notice/notice_list" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/notice/notice_list.jsp" />
+	</definition>
+	
+	<definition name="/career/notice/notice_detail" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/notice/notice_detail.jsp" />
+	</definition>
+	
+	<definition name="/career/gallery/gallery_list" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/gallery/gallery_list.jsp" />
+	</definition>
+	
+	<definition name="/career/gallery/gallery_detail" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/gallery/gallery_detail.jsp" />
+	</definition>
+	
+	<definition name="/career/video/video_list" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/video/video_list.jsp" />
+	</definition>
+	
+	<definition name="/career/video/video_detail" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/video/video_detail.jsp" />
+	</definition>
+	
+	<definition name="/main/career_main" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/main/career_main.jsp" />
+	</definition>
+	
+	<definition name="/main/career_work" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/work/career_work.jsp" />
+	</definition>
+	
+	<definition name="/main/career_intro" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/intro/career_intro.jsp" />
+	</definition>
+	
+	<definition name="/login/career_login" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/login/career_login.jsp" />
+	</definition>
+	<definition name="/sign/career_sign" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/sign/career_sign.jsp" />
+	</definition>
+	
+	<!-- 
+	<definition name="/system/introduce/introduce_detail" extends="default">
+		<put-attribute name="body" value="/WEB-INF/system/introduce/introduce_detail.jsp" />
+	</definition> -->
+</tiles-definitions>

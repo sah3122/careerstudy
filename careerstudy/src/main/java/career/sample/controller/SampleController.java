@@ -22,7 +22,7 @@ public class SampleController {
      
     @RequestMapping(value="/sample/openSampleBoardList.do")
     public ModelAndView openSampleBoardList(CommandMap commandMap) throws Exception{
-    	ModelAndView mv = new ModelAndView("");
+    	ModelAndView mv = new ModelAndView("/index");
         
         if(commandMap.isEmpty() == false){
             Iterator<Entry<String,Object>> iterator = commandMap.getMap().entrySet().iterator();

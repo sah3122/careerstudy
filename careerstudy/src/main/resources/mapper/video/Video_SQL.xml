@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="video">
+	<select id="selectVideoList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	VIDEO_IDX,
+                VIDEO_TITLE,
+	            VIDEO_WRITER,
+	            VIDEO_WRITER_IDX,
+	            VIDEO_SCHOOL_IDX,
+	            (SELECT SCHOOL_NAME 
+	             FROM school_info 
+	             WHERE SCHOOL_IDX = VIDEO_SCHOOL_IDX) as VIDEO_SCHOOL_NAME,
+	            (SELECT AREA_NAME 
+	             FROM area_info 
+	             WHERE area_idx = (SELECT SCHOOL_AREA 
+						             FROM school_info 
+						             WHERE SCHOOL_IDX = VIDEO_SCHOOL_IDX)) as VIDEO_SCHOOL_AREA,
+	            VIDEO_COMMENT,
+	            (SELECT VDO_STR_NAME 
+	             FROM video_file as A 
+	             WHERE A.VIDEO_IDX = B.VIDEO_IDX LIMIT 1) as VDO_STR_NAME,  
+	            VIDEO_INSERT_DATE
+            FROM
+                video_board as B
+            WHERE VIDEO_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<select id="selectVideoPagingList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+        SELECT
+		    AAA.*
+		FROM(
+		    SELECT
+				(SELECT COUNT(*) 
+					FROM 
+						video_board C
+		            WHERE C.VIDEO_DELETE_AT = 'N' 
+		            )  AS TOTAL_COUNT,
+		        AA.*
+		    FROM(
+	            SELECT
+	            	ABS(@ROWNUM := @ROWNUM + 1) AS VIDEO_COUNT,
+	            	VIDEO_IDX,
+	                VIDEO_TITLE,
+		            VIDEO_WRITER,
+		            VIDEO_WRITER_IDX,
+		            VIDEO_SCHOOL_IDX,
+		            VIDEO_CLICK_COUNT,
+		            (SELECT SCHOOL_NAME 
+		             FROM school_info 
+		             WHERE SCHOOL_IDX = VIDEO_SCHOOL_IDX) as VIDEO_SCHOOL_NAME,
+		            (SELECT AREA_NAME 
+		             FROM area_info 
+		             WHERE area_idx = (SELECT SCHOOL_AREA 
+							             FROM school_info 
+							             WHERE SCHOOL_IDX = VIDEO_SCHOOL_IDX)) as VIDEO_SCHOOL_AREA,
+		            VIDEO_COMMENT,
+		            (SELECT VDO_STR_NAME 
+		             FROM video_file as A 
+		             WHERE A.VIDEO_IDX = B.VIDEO_IDX LIMIT 1) as VDO_STR_NAME,  
+		            VIDEO_INSERT_DATE
+	            FROM
+	                video_board as B , (SELECT @ROWNUM := 0) ROWNUM
+	            WHERE VIDEO_DELETE_AT = 'N'
+	     	) AA
+		) AAA
+		    limit #{START}, #{END};
+        ]]>
+	</select>
+	
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectSchoolList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                SCHOOL_IDX,
+                SCHOOL_NAME
+            FROM
+                school_info
+            WHERE SCHOOL_AREA = #{area_idx}
+        ]]>
+    </select>
+	
+	<select id="selectVideo" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	VIDEO_IDX,
+                VIDEO_TITLE,
+	            VIDEO_WRITER,
+	            VIDEO_COMMENT,
+	            VIDEO_CLICK_COUNT,
+	            VIDEO_INSERT_DATE
+            FROM
+                video_board
+            WHERE VIDEO_DELETE_AT = 'N'
+            AND VIDEO_IDX = #{video_idx}
+        ]]>
+	</select>
+	
+	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	VDO_IDX,
+                VDO_STR_NAME
+            FROM
+                video_file
+            WHERE VIDEO_IDX = #{video_idx}
+        ]]>
+	</select>
+	
+	<insert id="insertVideo" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO video_board
+		       (
+		           VIDEO_TITLE,
+		           VIDEO_WRITER,
+		           VIDEO_WRITER_IDX,
+		           VIDEO_SCHOOL_IDX,
+		           VIDEO_COMMENT,
+		           VIDEO_DELETE_AT,
+		           VIDEO_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{video_title},
+		           #{writer_name},
+		           #{writer_idx},
+		           #{video_school},
+		           #{video_comment},
+		           'N',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <insert id="insertFile" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO video_file
+		       (
+		           VIDEO_IDX,
+		           VDO_ORG_NAME,
+		           VDO_STR_NAME,
+		           VDO_FILE_SIZE,
+		           VDO_DELETE_AT,
+		           VDO_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           (SELECT max(video_idx) 
+		            FROM video_board),
+		           #{VDO_ORG_NAME},
+		           #{VDO_STR_NAME},
+		           #{VDO_FILE_SIZE},
+		           'N',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <update id="updateVideo" parameterType="hashmap" >  	
+         UPDATE video_board
+	  	 SET   
+	  	 	   VIDEO_TITLE = #{video_title},
+	  	 	   VIDEO_COMMENT = #{video_comment},
+	  	 	   VIDEO_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d') 
+		WHERE VIDEO_IDX = #{video_idx}	       
+    </update>
+    
+    <update id="deleteVideo" parameterType="hashmap" >  	
+         UPDATE video_board
+	  	 SET   
+	  	 	   VIDEO_DELETE_AT = 'Y'
+		WHERE VIDEO_IDX = #{video_idx}	       
+    </update>
+    
+    <update id="updateVideoCount" parameterType="hashmap" >  	
+         UPDATE video_board
+	  	 SET   
+	  	 	   VIDEO_CLICK_COUNT = VIDEO_CLICK_COUNT + 1
+		WHERE VIDEO_IDX = #{video_idx}	       
+    </update>
+</mapper>

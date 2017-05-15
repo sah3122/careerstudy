@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gallery">
+	<select id="selectGalleryList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	
+            	GALLERY_IDX,
+                GALLERY_TITLE,
+	            GALLERY_WRITER,
+	            GALLERY_WRITER_IDX,
+	            GALLERY_SCHOOL_IDX,
+	            (SELECT SCHOOL_NAME 
+	             FROM school_info 
+	             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX) as GALLERY_SCHOOL_NAME,
+	            (SELECT AREA_NAME 
+	             FROM area_info 
+	             WHERE area_idx = (SELECT SCHOOL_AREA 
+						             FROM school_info 
+						             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX)) as GALLERY_SCHOOL_AREA,
+	            GALLERY_COMMENT,
+	            (SELECT IMG_STR_NAME 
+	             FROM img_file as A 
+	             WHERE A.GALLERY_IDX = B.GALLERY_IDX LIMIT 1) as IMG_STR_NAME,  
+	            GALLERY_INSERT_DATE
+            FROM
+                gallery_board as B
+            WHERE GALLERY_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<select id="selectGalleryPagingList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+        SELECT
+		    AAA.*
+		FROM(
+		    SELECT
+				(SELECT COUNT(*) 
+					FROM 
+						gallery_board C
+		            WHERE C.GALLERY_DELETE_AT = 'N' 
+		            )  AS TOTAL_COUNT,
+		        AA.*
+		    FROM(
+	            SELECT
+	            	ABS(@ROWNUM := @ROWNUM + 1) AS GALLERY_COUNT,
+	            	GALLERY_IDX,
+	                GALLERY_TITLE,
+		            GALLERY_WRITER,
+		            GALLERY_WRITER_IDX,
+		            GALLERY_SCHOOL_IDX,
+		            (SELECT SCHOOL_NAME 
+		             FROM school_info 
+		             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX) as GALLERY_SCHOOL_NAME,
+		            (SELECT AREA_NAME 
+		             FROM area_info 
+		             WHERE area_idx = (SELECT SCHOOL_AREA 
+							             FROM school_info 
+							             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX)) as GALLERY_SCHOOL_AREA,
+		            GALLERY_COMMENT,
+		            (SELECT IMG_STR_NAME 
+		             FROM img_file as A 
+		             WHERE A.GALLERY_IDX = B.GALLERY_IDX LIMIT 1) as IMG_STR_NAME,  
+		            GALLERY_INSERT_DATE
+	            FROM
+	                gallery_board as B , (SELECT @ROWNUM := 0) ROWNUM
+	            WHERE GALLERY_DELETE_AT = 'N'
+	     	) AA
+		) AAA
+		    limit #{START}, #{END};
+        ]]>
+	</select>
+	
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectSchoolList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                SCHOOL_IDX,
+                SCHOOL_NAME
+            FROM
+                school_info
+            WHERE SCHOOL_AREA = #{area_idx}
+        ]]>
+    </select>
+	
+	<select id="selectGallery" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	GALLERY_IDX,
+                GALLERY_TITLE,
+	            GALLERY_WRITER,
+	            GALLERY_COMMENT,
+	            GALLERY_INSERT_DATE,
+	            GALLERY_CLICK_COUNT
+            FROM
+                gallery_board
+            WHERE GALLERY_DELETE_AT = 'N'
+            AND GALLERY_IDX = #{gallery_idx}
+        ]]>
+	</select>
+	
+	<select id="selectFileList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	IMG_IDX,
+                IMG_STR_NAME
+            FROM
+                img_file
+            WHERE GALLERY_IDX = #{gallery_idx}
+        ]]>
+	</select>
+	
+	<insert id="insertGallery" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO gallery_board
+		       (
+		           GALLERY_TITLE,
+		           GALLERY_WRITER,
+		           GALLERY_WRITER_IDX,
+		           GALLERY_SCHOOL_IDX,
+		           GALLERY_COMMENT,
+		           GALLERY_DELETE_AT,
+		           GALLERY_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{gallery_title},
+		           #{writer_name},
+		           #{writer_idx},
+		           #{gallery_school},
+		           #{gallery_comment},
+		           'N',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <insert id="insertFile" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO img_file
+		       (
+		           GALLERY_IDX,
+		           IMG_ORG_NAME,
+		           IMG_STR_NAME,
+		           IMG_FILE_SIZE,
+		           IMG_DELETE_AT,
+		           IMG_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           (SELECT max(gallery_idx) 
+		            FROM gallery_board),
+		           #{IMG_ORG_NAME},
+		           #{IMG_STR_NAME},
+		           #{IMG_FILE_SIZE},
+		           'N',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <update id="updateGallery" parameterType="hashmap" >  	
+         UPDATE gallery_board
+	  	 SET   
+	  	 	   GALLERY_TITLE = #{gallery_title},
+	  	 	   GALLERY_COMMENT = #{gallery_comment},
+	  	 	   GALLERY_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d') 
+		WHERE GALLERY_IDX = #{gallery_idx}	       
+    </update>
+    
+    <update id="deleteGallery" parameterType="hashmap" >  	
+         UPDATE gallery_board
+	  	 SET   
+	  	 	   GALLERY_DELETE_AT = 'Y'
+		WHERE GALLERY_IDX = #{gallery_idx}	       
+    </update>
+    
+    <update id="updateGalleryCount" parameterType="hashmap" >  	
+         UPDATE gallery_board
+	  	 SET   
+	  	 	   GALLERY_CLICK_COUNT = GALLERY_CLICK_COUNT + 1
+		WHERE GALLERY_IDX = #{gallery_idx}	       
+    </update>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sign">
+	
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectSchoolList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                SCHOOL_IDX,
+                SCHOOL_NAME
+            FROM
+                school_info
+            WHERE SCHOOL_AREA = #{area_idx}
+        ]]>
+    </select>
+    
+    <select id="selectUser" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                USER_IDX
+            FROM
+                career_user
+            WHERE USER_ID = #{sign_id}
+        ]]>
+    </select>
+	
+	<insert id="insertUser" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO career_user
+		       (
+		           USER_ID,
+		           USER_PW,
+		           USER_NAME,
+		           USER_AREA,
+		           USER_EMAIL,
+		           USER_SCHOOL,
+		           USER_DELETE_AT,
+		           USER_CODE,
+		           USER_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{sign_id},
+		           #{sign_password},
+		           #{sign_name},
+		           #{sign_area},
+		           #{sign_email},
+		           #{sign_school},
+		           'N',
+		           '002',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+	<select id="selectUser" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                USER_IDX,
+                USER_ID,
+                USER_PW,
+                USER_NAME,
+                USER_CODE,
+                USER_DELETE_AT
+            FROM
+                career_user
+            WHERE USER_ID = #{user_id}
+            AND   USER_PW = #{user_password}
+            AND   USER_DELETE_AT = 'N'
+        ]]>
+	</select>
+</mapper>

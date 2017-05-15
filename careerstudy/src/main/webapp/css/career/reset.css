@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* CSS Document 윤인테리어 */
+
+
+/*기본화면 - 제일 작은 사이즈의 화면을 기준으로 작성이 됨 index)*/
+
+#wrap{min-width:310px;}
+#header{position:relative; height:80px; background:#ffffff; z-index:300;}
+.logo{text-align:center; padding-top:10px;}
+.logo img{width:auto; height:60px;}
+.utill{display:none;}
+.openMenu{position:absolute; top:30px; left:15px;}
+.openMenu img{width:28px; height:auto;}
+
+.gnb{position:absolute; top:11px; left:0; width:100%; z-index:500; display:none;}
+.gnb .close{display:block; width:40px; height:40px; padding:10px; background:#ffffff; margin-bottom:10px;}
+
+.gnb .depth1{position:relative; background:#ecede2; border-top:1px solid #f5f5f5; border-bottom:1px solid #d9dbc9}
+.gnb .depth1 .m{display:block; padding:30px 20px; color:#000; opacity:.90; font-size:13px;}
+.gnb .depth1 .arr{position:absolute; top:29px; right:20px; width:20px; height:20px; background:url(/img/career/btn_more.png) no-repeat 0 center; background-size:20px 20px;}
+
+.gnb .depth1  .depth2{display:none;}
+.gnb .depth1:hover .depth2{display:block;}
+.gnb .depth2 .gnbpic1{display:none;}
+.gnb .depth2 .gnbpic2{display:none;}
+.gnb .depth2 .submenu dl{border-top:1px solid #ddd;}
+.gnb .depth2 .submenu dt a{display:block; padding:15px;}
+.gnb .depth2 .submenu dd{display:none;}
+
+
+
+ /*#footer영역*/
+    #footer{
+    width:100%;
+    height:180px;
+    background:#2a2a2a;
+    position:relative;
+    }
+
+    #footerin .flogo{
+    color:#ffffff;
+    position:absolute;
+    top:20px;
+    left:50%;
+    margin-left:-180px;
+    font-weight:400;
+    }
+     #footerin .fright{
+    position:absolute;
+    bottom:45px;
+
+    right:50%;
+    margin-right:-75px;
+    }
+    #footerin .hp{
+
+    position:absolute;
+    bottom:15px;
+    color:#545454;
+    right:50%;
+    margin-right:-90px;
+    }
+}
+
+
+
+@media screen and (min-width:640px){
+
+#wrap{min-width:640px;}
+#header .utill{display:none;}
+#footerin .hp{color:#545454; position:absolute; bottom:10px; right:50%; margin-right:-100px;}
+}
+
+
+
+@media screen and (min-width:1024px){
+
+#wrap{width:100%; overflow:hidden; max-width:1000px; margin:0 auto;}
+.utill{display:block !important; height:35px; width:100%; background:#f9f9f9; border-bottom:1px solid #e3e3e3;}
+/* .utill .home{position:absolute; top:18px; right:50%; margin-right:-400px; height:35px; width:80px; padding:8px 0;} */
+.utill .home{position:absolute; right:50%; margin-right:-400px; height:35px; width:80px; padding:8px 0;}
+.utill .home a{color:#999999; font-size:12px;}
+/* .utill .blog{display:block; position:absolute; top:18px; right:50%; margin-right:-430px; padding:8px 15px 8px 0;} */
+.utill .blog{display:block; position:absolute; right:50%; margin-right:-430px; padding:8px 15px 8px 0;}
+.utill .blog a{color:#999999; font-size:12px;}
+/* .utill .way{display:block; position:absolute; top:18px; right:50%; margin-right:-500px; padding:8px 15px 8px 0;} */
+.utill .way{display:block; position:absolute; right:50%; margin-right:-500px; padding:8px 15px 8px 0;}
+.utill .way a{color:#999999; font-size:12px;}
+
+#header{height:150px;}
+
+.logo{width:1000px; height:90px; margin:0 auto; text-align:center; background:#ffffff;}
+.logo img{width:auto; height:70px; }
+.openMenu{display:none;}
+
+.gnb{display:block; width:1000px; position:absolute; left:50%; top:96px; margin-left:-500px; border-top:1px solid #bfbfbf;  border-bottom:1px solid #bfbfbf; background:#ffffff;}
+.gnb:after{content:""; display:block; clear:both;}
+.gnb .close{display:none;}
+
+.gnb .depth1{display:block; float:left; border:0; background:#ffffff;}
+.gnb .depth1 .m{padding:15px 38px 15px 50px;}
+
+.gnb .depth1 .m:last-child{padding-right:0;}
+.gnb .depth1 span{color:#282826; padding-left:35px; font-weight:900;}
+
+.gnb .depth1 span:hover{color:#2baa97;}/*f6260a*/
+.gnb .depth1:nth-child(1) span{background:none; padding-right:10px;}
+.gnb .depth1 .gnbsub{display:none;}
+.gnb .depth1 .arr{display:none;}
+
+
+
+
+
+
+    /*#footer영역*/
+    #footer{
+    width:100%;
+    height:140px;
+    background:#2a2a2a;
+    position:relative;
+    }
+    #footerin .flogo{
+    color:#ffffff;
+    position:absolute;
+    top:20px;
+    left:50%;
+    margin-left:-500px;
+    font-weight:400;
+    }
+
+    #footerin .hp{
+    position:absolute;
+    bottom:15px;
+    color:#545454;
+    right:50%;
+    margin-right:-90px;
+    }
+    #footerin .fright{
+    color:#ffffff;
+    position:absolute;
+    bottom:20px;
+    right:50%;
+    margin-right:-480px;
+    }
+}
