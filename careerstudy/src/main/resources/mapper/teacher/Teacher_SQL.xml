@@ -52,6 +52,17 @@
         ]]>
     </select>
     
+    <select id="selectSchoolData" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	SCHOOL_IDX
+            FROM
+                school_info 
+            WHERE SCHOOL_NAME = #{teacher_school}
+            AND SCHOOL_AREA = #{teacher_area}
+        ]]>
+    </select>
+    
     <insert id="insertTeacher" parameterType="hashmap" >
     	<![CDATA[
             INSERT 

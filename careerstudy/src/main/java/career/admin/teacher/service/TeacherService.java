@@ -6,6 +6,7 @@ import java.util.Map;
 public interface TeacherService {
 	Map<String, Object> selectUserId(Map<String, Object> map) throws Exception;
 	Map<String, Object> selectTeacher(Map<String, Object> map) throws Exception;
+	Map<String, Object> selectSchoolData(Map<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> selectAreaList(Map<String, Object> map) throws Exception;
 	List<Map<String, Object>> selectTeacherList(Map<String, Object> map) throws Exception;

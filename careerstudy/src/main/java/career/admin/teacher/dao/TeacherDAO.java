@@ -20,6 +20,11 @@ public class TeacherDAO extends AbstractDAO{
 		return (Map<String, Object>)selectOne("teacher.selectTeacher", map);
 	}
 	
+	public Map<String, Object> selectSchoolData(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>)selectOne("teacher.selectSchoolData", map);
+	}
+	
 	public List<Map<String, Object>> selectAreaList(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<Map<String, Object>>)selectList("teacher.selectAreaList", map);

@@ -20,7 +20,11 @@ public class TeacherServiceImpl implements TeacherService{
 		// TODO Auto-generated method stub
 		return teacherDAO.selectTeacher(map);
 	}
-	
+	@Override
+	public Map<String, Object> selectSchoolData(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return teacherDAO.selectSchoolData(map);
+	}
 	@Override
 	public Map<String, Object> selectUserId(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub

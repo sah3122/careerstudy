@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="question">
+	<select id="selectQuestionList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	QUESTION_IDX,
+	            QUESTION_WRITER,
+	            QUESTION_WRITER_IDX,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_EDU) as QUESTION_EDU_VAL,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_STUDY) as QUESTION_STUDY_VAL,
+	            QUESTION_SCHOOL_IDX,
+	            (SELECT SCHOOL_NAME 
+	             FROM school_info 
+	             WHERE SCHOOL_IDX = QUESTION_SCHOOL_IDX) as QUESTION_SCHOOL_NAME,
+	            (SELECT AREA_NAME 
+	             FROM area_info 
+	             WHERE area_idx = QUESTION_AREA_IDX) as QUESTION_AREA_NAME,
+	            QUESTION_INSERT_DATE
+            FROM
+                question_board as B
+            WHERE QUESTION_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<select id="selectQuestionPagingList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+        SELECT
+		    AAA.*
+		FROM(
+		    SELECT
+				(SELECT COUNT(*) 
+					FROM 
+						gallery_board C
+		            WHERE C.GALLERY_DELETE_AT = 'N' 
+		            )  AS TOTAL_COUNT,
+		        AA.*
+		    FROM(
+	            SELECT
+	            	ABS(@ROWNUM := @ROWNUM + 1) AS GALLERY_COUNT,
+	            	GALLERY_IDX,
+	                GALLERY_TITLE,
+		            GALLERY_WRITER,
+		            GALLERY_WRITER_IDX,
+		            GALLERY_SCHOOL_IDX,
+		            (SELECT SCHOOL_NAME 
+		             FROM school_info 
+		             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX) as GALLERY_SCHOOL_NAME,
+		            (SELECT AREA_NAME 
+		             FROM area_info 
+		             WHERE area_idx = (SELECT SCHOOL_AREA 
+							             FROM school_info 
+							             WHERE SCHOOL_IDX = GALLERY_SCHOOL_IDX)) as GALLERY_SCHOOL_AREA,
+		            GALLERY_COMMENT,
+		            (SELECT IMG_STR_NAME 
+		             FROM img_file as A 
+		             WHERE A.GALLERY_IDX = B.GALLERY_IDX LIMIT 1) as IMG_STR_NAME,  
+		            GALLERY_INSERT_DATE
+	            FROM
+	                gallery_board as B , (SELECT @ROWNUM := 0) ROWNUM
+	            WHERE GALLERY_DELETE_AT = 'N'
+	     	) AA
+		) AAA
+		    limit #{START}, #{END};
+        ]]>
+	</select>
+	
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectSchoolList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                SCHOOL_IDX,
+                SCHOOL_NAME
+            FROM
+                school_info
+            WHERE SCHOOL_AREA = #{area_idx}
+        ]]>
+    </select>
+	
+	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	QUESTION_IDX,
+	            QUESTION_WRITER,
+	            QUESTION_WRITER_IDX,
+	            QUESTION_EDU,
+	            QUESTION_STUDY,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_EDU) as QUESTION_EDU_VAL,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_STUDY) as QUESTION_STUDY_VAL,
+	            QUESTION_SCHOOL_IDX,
+	            (SELECT SCHOOL_NAME 
+	             FROM school_info 
+	             WHERE SCHOOL_IDX = QUESTION_SCHOOL_IDX) as QUESTION_SCHOOL_NAME,
+	            (SELECT AREA_NAME 
+	             FROM area_info 
+	             WHERE area_idx = QUESTION_AREA_IDX) as QUESTION_AREA_NAME,
+	            QUESTION_INSERT_DATE
+            FROM
+                question_board
+            WHERE QUESTION_DELETE_AT = 'N'
+            AND QUESTION_IDX = #{question_idx}
+        ]]>
+	</select>
+	
+	<select id="questionEmpty" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	QUESTION_IDX
+            FROM
+                question_board
+            WHERE QUESTION_SCHOOL_IDX = #{question_school}
+            AND QUESTION_AREA_IDX = #{question_area}
+            AND QUESTION_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<insert id="insertQuestion" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO question_board
+		       (
+		           QUESTION_SCHOOL_IDX,
+		           QUESTION_AREA_IDX,
+		           QUESTION_EDU,
+		           QUESTION_STUDY,
+		           QUESTION_WRITER,
+		           QUESTION_WRITER_IDX,
+		           QUESTION_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{question_school},
+		           #{question_area},
+		           #{education_satis},
+		           #{stduy_materials},
+		           #{writer_name},
+		           #{writer_idx},
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+    <update id="updateQuestion" parameterType="hashmap" >  	
+         UPDATE question_board
+	  	 SET   
+	  	 	   QUESTION_EDU = #{education_satis},
+	  	 	   QUESTION_STUDY = #{stduy_materials},
+	  	 	   QUESTION_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d') 
+		WHERE QUESTION_IDX = #{question_idx}	       
+    </update>
+    
+    <update id="deleteQuestion" parameterType="hashmap" >  	
+         UPDATE question_board
+	  	 SET   
+	  	 	   QUESTION_DELETE_AT = 'Y'
+		WHERE QUESTION_IDX = #{question_idx}	       
+    </update>
+    
+    <update id="updateGalleryCount" parameterType="hashmap" >  	
+         UPDATE gallery_board
+	  	 SET   
+	  	 	   GALLERY_CLICK_COUNT = GALLERY_CLICK_COUNT + 1
+		WHERE GALLERY_IDX = #{gallery_idx}	       
+    </update>
+</mapper>

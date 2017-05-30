@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/admin/openAdminMain.do">진로교육</a>
+                <a class="navbar-brand" href="/admin/openAdminMain.do">진로교육 관리자 사이트</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -36,9 +36,9 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li>
+                       <!--  <li>
                             <a href="/admin/main/adminMain.do"><i class="fa fa-dashboard fa-fw"></i>대시보드</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i>게시판<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -109,6 +109,18 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-pencil fa-fw"></i>교육만족도<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/admin/question/questionInsert.do">교육만족도 등록</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/question/questionList.do">교육만족도 보기</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                       <!--  <li>
                             <a href="/admin/openAdminTables.do"><i class="fa fa-table fa-fw"></i> Tables</a>
                         </li>
                         <li>
@@ -136,7 +148,7 @@
                                     <a href="grid.html">Grid</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
+                            /.nav-second-level
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
@@ -148,8 +160,8 @@
                                     <a href="/admin/openAdminLogin.do">Login Page</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                            /.nav-second-level
+                        </li> -->
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

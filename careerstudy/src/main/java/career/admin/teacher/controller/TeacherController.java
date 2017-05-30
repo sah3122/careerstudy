@@ -63,7 +63,10 @@ public class TeacherController {
         }
         
         Map<String, Object> loginData = teacherService.selectUserId(commandMap.getMap());
-        if(loginData == null) {
+        Map<String, Object> schoolData = teacherService.selectSchoolData(commandMap.getMap());
+        if(schoolData != null) {
+        	mv.addObject("RESULT", 2);
+        } else if(loginData == null) {
         	mv.addObject("RESULT", 0);
         	commonLoginUtil = new CommonLoginUtil();
             commandMap.put("teacher_pass", commonLoginUtil.aesEncode((String)commandMap.get("teacher_pass")));

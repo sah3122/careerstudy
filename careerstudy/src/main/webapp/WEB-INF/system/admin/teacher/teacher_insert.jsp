@@ -15,6 +15,8 @@
 			             alert("회원가입 되었습니다.");
 			          }else if (data.RESULT == '1'){
 			        	 alert("id가 중복됩니다."); 
+			          }else if (data.RESULT == '2'){
+			        	 alert("해당학교에 선생님이 존재합니다."); 
 			          } else {
 			        	 alert("알수없는 오류가 발생하였습니다.");
 			          }

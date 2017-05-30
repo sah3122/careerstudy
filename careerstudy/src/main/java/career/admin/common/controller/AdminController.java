@@ -96,7 +96,7 @@ public class AdminController {
         	se.setUserCode(userData.get("USER_CODE").toString());
     		session.setAttribute("session", se);
         	
-    		mv.setView(new RedirectView("/admin/main/adminMain.do"));
+    		mv.setView(new RedirectView("/admin/notice/noticeList.do"));
     	} else {
     		mv.setView(new RedirectView("/admin/login/loginMain.do"));
     	}
