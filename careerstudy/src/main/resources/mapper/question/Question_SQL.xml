@@ -87,7 +87,7 @@
         ]]>
     </select>
 	
-	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
+	<select id="selectQuestionIdx" parameterType="hashmap" resultType="hashmap">
         <![CDATA[
             SELECT
             	QUESTION_IDX,
@@ -109,6 +109,21 @@
                 question_board
             WHERE QUESTION_DELETE_AT = 'N'
             AND QUESTION_IDX = #{question_idx}
+        ]]>
+	</select>
+	
+	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+	            QUESTION_EDU,
+	            QUESTION_STUDY,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_EDU) as QUESTION_EDU_VAL,
+	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_STUDY) as QUESTION_STUDY_VAL
+            FROM
+                question_board
+            WHERE QUESTION_DELETE_AT = 'N'
+            AND QUESTION_SCHOOL_IDX = #{question_school_idx}
+            AND QUESTION_AREA_IDX = #{question_area_idx}
         ]]>
 	</select>
 	

@@ -156,8 +156,13 @@
 	<definition name="/login/career_login" extends="career">
 		<put-attribute name="body" value="/WEB-INF/system/login/career_login.jsp" />
 	</definition>
+	
 	<definition name="/sign/career_sign" extends="career">
 		<put-attribute name="body" value="/WEB-INF/system/sign/career_sign.jsp" />
+	</definition>
+	
+	<definition name="/question/question_detail" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/question/question_detail.jsp" />
 	</definition>
 	
 	<!-- 

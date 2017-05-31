@@ -32,7 +32,7 @@ public class AdminQuestionDAO extends AbstractDAO{
 	
 	public Map<String, Object> selectQuestion(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return (Map<String, Object>)selectOne("question.selectQuestion", map);
+		return (Map<String, Object>)selectOne("question.selectQuestionIdx", map);
 	}
 	
 	public int insertQuestion(Map<String, Object> map) throws Exception {
