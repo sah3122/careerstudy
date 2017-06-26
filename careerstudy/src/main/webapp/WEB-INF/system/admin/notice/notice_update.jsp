@@ -6,6 +6,13 @@
 		if($("#notice_title").val() == "" || $("#notice_comment").val() == ""){
 			alert("제목 또는 내용을 입력해주세요.");
 		} else {
+			var test= "";
+			test = $("#notice_comment").val();
+			alert(test);
+			test = test.replace("\r\n","<br>");
+			alert(test);
+			$("#notice_comment").val(test);
+			
 			$("#data_form").attr("action", "/admin/notice/noticeUpdateDone.do").submit();
 		}
 	}

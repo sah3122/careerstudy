@@ -30,6 +30,12 @@ public class SignServiceImpl implements SignService{
 	}
 	
 	@Override
+	public Map<String, Object> selectStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return signDAO.selectStudent(map);
+	}
+	
+	@Override
 	public Map<String, Object> selectUser(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return signDAO.selectUser(map);
@@ -39,6 +45,18 @@ public class SignServiceImpl implements SignService{
 	public int insertUser(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return signDAO.insertUser(map);
+	}
+	
+	@Override
+	public int updateStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return signDAO.updateStudent(map);
+	}
+	
+	@Override
+	public int deleteStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return signDAO.deleteStudent(map);
 	}
 
 }

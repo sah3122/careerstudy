@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+     //치환 변수 선언합니다.
+      pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
+      pageContext.setAttribute("br", "<br/>"); //br 태그
+%> 
 <script>
 	function fn_notice_list(){
 		$("#data_form").attr("action", "/career/notice/noticeList.do").submit();
@@ -39,7 +44,7 @@
 		<div id="bo_v_img"></div>
 		<!-- 본문 내용 시작 { -->
 		<div id="bo_v_con">
-			${noticeData.NOTICE_COMMENT}
+			${fn:replace(noticeData.NOTICE_COMMENT, crcn, br)}
 		</div>
 		<!-- } 본문 내용 끝 -->
 	</section>

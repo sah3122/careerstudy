@@ -41,14 +41,23 @@
 	<div id="conten_wrap" class="out_box">
 		<div id="con_1">
 			<div class="con_1_box">
-				<a href="#"><img src="/img/career/msub1.jpg"></a>
+				<a href="/main/careerIntro.do"><img src="/img/career/msub1.jpg"></a>
 			</div>
 			<div class="con_1_box">
-				<a href="#"><img src="/img/career/msub2.jpg"></a>
+				<a href="/main/careerWork.do"><img src="/img/career/msub2.jpg"></a>
 			</div>
 			<div class="con_1_box">
-				<a href="#"><img src="/img/career/msub3.jpg"></a>
+				<a href="/career/gallery/galleryList.do"><img src="/img/career/msub3.jpg"></a>
 			</div>
+			<div class="con_1_box">
+				<a href="/career/video/videoList.do"><img src="/img/career/msub4.jpg"></a>
+			</div>
+            <div class="con_1_box">
+            	<a href="/career/notice/noticeList.do"><img src="/img/career/msub5.jpg"></a>
+            </div>
+            <div class="con_1_box">
+            	<a href="tel:010-9279-0537"><img src="/img/career/msub6.jpg"></a>
+            </div>
 		</div>
 	</div>
 </div>

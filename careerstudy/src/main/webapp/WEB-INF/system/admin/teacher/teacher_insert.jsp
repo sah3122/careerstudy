@@ -3,6 +3,23 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script>
 	function fn_insert_done(){
+		if($("#teacher_id").val() == ""){
+			alert("id를 입력해주세요");
+			return 0;
+		}
+		if($("#teacher_name").val() == ""){
+			alert("이름을 입력해주세요");
+			return 0;
+		}
+		if($("#teacher_area").val() == ""){
+			alert("지역을 선택해주세요");
+			return 0;
+		}
+		if($("#teacher_school").val() == ""){
+			alert("학교명을 입력해주세요");
+			return 0;
+		}
+		
 		if($("#teacher_pass").val() != null && $("#teacher_pass2").val() != null && $("#teacher_pass").val() != "" && $("#teacher_pass2").val() != "" && $("#teacher_pass").val() == $("#teacher_pass2").val()){
 			$.ajax({
 			      type: "POST",
@@ -13,6 +30,7 @@
 			      	// r = 리턴받는 json객체
 			          if(data.RESULT=='0'){ 
 			             alert("회원가입 되었습니다.");
+			             window.location.reload(true);
 			          }else if (data.RESULT == '1'){
 			        	 alert("id가 중복됩니다."); 
 			          }else if (data.RESULT == '2'){
@@ -43,7 +61,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<form id="data_form" name="data_form" role="form" method="post">
-								<input type="hidden" id="user_code" name="user_code" value="000"/>
+								<input type="hidden" id="user_code" name="user_code" value="001"/>
 								<div class="form-group">
 									<label>아이디</label> <input type="text" id="teacher_id" name="teacher_id" class="form-control">
 								</div>

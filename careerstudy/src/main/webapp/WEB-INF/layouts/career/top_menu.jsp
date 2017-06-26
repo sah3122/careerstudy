@@ -17,7 +17,15 @@
 		</c:choose>
 	</p>
 	<p class="way">
-		<a href="/sign/careerSign.do">SIGN UP</a>
+		<c:choose>
+			<c:when test="${session == null}">	
+				<a href="/sign/careerSign.do">SIGN UP</a>
+			</c:when>
+			<c:otherwise>
+				<a href="/sign/signDetail.do">MY PAGE</a>
+			</c:otherwise>
+		</c:choose>
+		
 	</p>
 </div>
 <!--.utill-->

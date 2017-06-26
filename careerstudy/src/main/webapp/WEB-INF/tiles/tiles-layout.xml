@@ -48,6 +48,23 @@
 		<put-attribute name="body" value="/WEB-INF/system/admin/teacher/teacher_list.jsp" />
 	</definition>
 	
+	<!--  student -->
+	<definition name="/admin/student/student_insert" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/student/student_insert.jsp" />
+	</definition>
+	
+	<definition name="/admin/student/student_detail" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/student/student_detail.jsp" />
+	</definition>
+	
+	<definition name="/admin/student/student_update" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/student/student_update.jsp" />
+	</definition>
+	
+	<definition name="/admin/student/student_list" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/system/admin/student/student_list.jsp" />
+	</definition>
+	
 	<!-- notice -->
 	<definition name="/admin/notice/notice_list" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/system/admin/notice/notice_list.jsp" />
@@ -159,6 +176,14 @@
 	
 	<definition name="/sign/career_sign" extends="career">
 		<put-attribute name="body" value="/WEB-INF/system/sign/career_sign.jsp" />
+	</definition>
+	
+	<definition name="/sign/career_detail" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/sign/career_detail.jsp" />
+	</definition>
+	
+	<definition name="/sign/career_update" extends="career">
+		<put-attribute name="body" value="/WEB-INF/system/sign/career_update.jsp" />
 	</definition>
 	
 	<definition name="/question/question_detail" extends="career">

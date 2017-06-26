@@ -33,6 +33,28 @@
             WHERE USER_ID = #{sign_id}
         ]]>
     </select>
+    
+    <select id="selectStudent" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	USER_IDX,
+            	USER_ID,
+                USER_NAME,
+                (SELECT SCHOOL_NAME 
+                 FROM school_info 
+                 WHERE SCHOOL_IDX = USER_SCHOOL) as USER_SCHOOL,
+                (SELECT AREA_NAME 
+                 FROM area_info 
+                 WHERE AREA_IDX = USER_AREA) as USER_AREA,
+                USER_TEL_NUM,
+                USER_EMAIL,
+                USER_INSERT_DATE
+            FROM
+                career_user 
+            WHERE USER_IDX = #{student_idx}
+            AND USER_DELETE_AT = 'N'
+        ]]>
+    </select>
 	
 	<insert id="insertUser" parameterType="hashmap" >
     	<![CDATA[
@@ -47,6 +69,7 @@
 		           USER_SCHOOL,
 		           USER_DELETE_AT,
 		           USER_CODE,
+		           USER_TEL_NUM,
 		           USER_INSERT_DATE
 		       ) 
 		       VALUES
@@ -59,8 +82,27 @@
 		           #{sign_school},
 		           'N',
 		           '002',
+		           #{sign_tel},
 		           date_format(NOW(),'%Y-%m-%d')
 		       )  
         ]]>
     </insert>
+    
+    <update id="updateStudent" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	           USER_NAME = #{sign_name},
+	           USER_TEL_NUM = #{sign_tel},
+	           USER_EMAIL = #{sign_email},
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{sign_idx}	       
+    </update>
+    
+    <update id="deleteStudent" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	  	 	   USER_DELETE_AT = 'Y',
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{sign_idx}	       
+    </update>
 </mapper>

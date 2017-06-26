@@ -31,6 +31,13 @@
                 	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
                     <div class="tbl_head01 tbl_wrap">
                         <table>
+                        	<colgroup>
+                        		<col style="width:10%">
+                        		<col style="width:*">
+                        		<col style="width:15%">
+                        		<col style="width:17%">
+                        		<col style="width:10%">
+                        	</colgroup>
                             <caption>프로그램 영상 목록</caption>
                             <thead>
                                 <tr>
@@ -43,7 +50,7 @@
 						    </thead>
 						    <tbody>
 						    	<c:choose>
-									<c:when test="${fn:length(videoList) > 0}">
+									<c:when test="${fn:length(videoList) > 0 && videoList[0].TOTAL_COUNT ne 0}">
 										<c:forEach items="${videoList}" var="row" varStatus="status">
 											<tr onclick="fn_video_detail(${row.VIDEO_IDX})" style="cursor:pointer">
 												<td class="td_num">${fn:substringBefore(row.VIDEO_COUNT, '.') }</td>
@@ -56,7 +63,7 @@
 									</c:when>				
 									<c:otherwise>
 										<tr>
-											<td colspan="5">프로그램 영상이 없습니다.</td>
+											<td colspan="5" class="td_date" >프로그램 영상이 없습니다.</td>
 										</tr>
 									</c:otherwise>
 								</c:choose>

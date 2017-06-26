@@ -144,10 +144,18 @@
 					</tr>
 					<tr>
 						<th scope="row">
+							<label for="wr_email">전화번호</label>
+						</th>
+						<td>
+							<input type="text" name="sign_tel" value="" placeholder="000-0000-0000" id="sign_tel" class="frm_input" size="15" maxlength="15">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
 							<label for="wr_email">이메일</label>
 						</th>
 						<td>
-							<input type="text" name="sign_email" value="" id="sign_email" class="frm_input" size="50" maxlength="100">
+							<input type="text" name="sign_email" value="" id="sign_email" class="frm_input" size="30" maxlength="30">
 						</td>
 					</tr>
 					<tr>

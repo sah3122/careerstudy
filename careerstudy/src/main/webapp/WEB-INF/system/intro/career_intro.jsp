@@ -51,7 +51,7 @@
 </div>
 </div>
 
-<div id="info_table">
+<!-- <div id="info_table">
 	<div class="t3">
 
 		<div class="tblWrap">
@@ -86,7 +86,7 @@
 			</table>
 		</div>
 	</div>
-</div>
+</div> -->
 <!--#info_table-->
 <!--#info_table-->
 <!-- <div id="sns">

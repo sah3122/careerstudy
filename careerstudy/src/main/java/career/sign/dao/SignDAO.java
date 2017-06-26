@@ -20,6 +20,11 @@ public class SignDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectList("sign.selectSchoolList", map);
 	}
 	
+	public Map<String, Object> selectStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return (Map<String, Object>)selectOne("sign.selectStudent", map);
+	}
+	
 	public Map<String, Object> selectUser(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return (Map<String, Object>) selectOne("sign.selectUser", map);
@@ -28,6 +33,16 @@ public class SignDAO extends AbstractDAO {
 	public int insertUser(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return (int) insert("sign.insertUser", map);
+	}
+	
+	public int updateStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return (int) update("sign.updateStudent", map);
+	}
+	
+	public int deleteStudent(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return (int) update("sign.deleteStudent", map);
 	}
 
 }

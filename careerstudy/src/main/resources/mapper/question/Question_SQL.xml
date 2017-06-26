@@ -117,6 +117,10 @@
             SELECT
 	            QUESTION_EDU,
 	            QUESTION_STUDY,
+	            (SELECT ROUND(AVG(QUESTION_EDU)) FROM question_board WHERE QUESTION_AREA_IDX = #{question_area_idx}) as QUESTION_AREA_EDU,
+	            (SELECT ROUND(AVG(QUESTION_STUDY)) FROM question_board WHERE QUESTION_AREA_IDX = #{question_area_idx}) as QUESTION_AREA_STUDY,  
+	            (SELECT AREA_NAME FROM area_info WHERE AREA_IDX = #{question_area_idx}) as QUESTION_AREA_NAME,
+	            (SELECT SCHOOL_NAME FROM school_info WHERE SCHOOL_IDX = #{question_school_idx}) as QUESTION_SCHOOL_NAME,
 	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_EDU) as QUESTION_EDU_VAL,
 	            (SELECT SATIS_NAME FROM satis_info WHERE SATIS_IDX = QUESTION_STUDY) as QUESTION_STUDY_VAL
             FROM

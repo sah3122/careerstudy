@@ -2,9 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="http://mrhome.kr/gnuboard5/js/viewimageresize.js"></script>
-
+<%
+     //치환 변수 선언합니다.
+      pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
+      pageContext.setAttribute("br", "<br/>"); //br 태그
+%> 
 <!-- 게시물 읽기 시작 { -->
-
 <article id="bo_v" style="width: 100%">
 	<header>
 		<h1 id="bo_v_title">${galleryData.GALLERY_TITLE}</h1>
@@ -37,7 +40,7 @@
 
 		<!-- 본문 내용 시작 { -->
 		<div id="bo_v_con">
-			${galleryData.GALLERY_COMMENT}
+			${fn:replace(galleryData.GALLERY_COMMENT, crcn, br)}
 		</div>
 		<!-- } 본문 내용 끝 -->
 		<!-- 스크랩 추천 비추천 시작 { -->

@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import career.common.common.CommandMap;
+import career.common.util.Session;
 import career.gallery.service.GalleryService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -24,7 +27,7 @@ public class GalleryController {
     private GalleryService galleryService;
      
     @RequestMapping(value="/career/gallery/galleryList.do")
-    public ModelAndView openCareerGalleryMain(CommandMap commandMap) throws Exception{
+    public ModelAndView openCareerGalleryMain(CommandMap commandMap, HttpServletRequest request) throws Exception{
     	ModelAndView mv = new ModelAndView("/career/gallery/gallery_list");
         
         if(commandMap.isEmpty() == false){
@@ -35,11 +38,17 @@ public class GalleryController {
                 log.debug("key : "+entry.getKey()+", value : "+entry.getValue());
             }
         }
-        
+        HttpSession session = request.getSession(true);
+    	Session se = (Session) session.getAttribute("session");
+        if(se != null){
+        	commandMap.getMap().put("schoolIdx", se.getUserSchool());
+        } else {
+        	commandMap.getMap().put("schoolIdx", null);
+        }
         List<Map<String, Object>> galleryList = galleryService.selectGalleryList(commandMap.getMap());
         Map<String, Object> galleryPagingList = galleryService.selectGalleryPagingList(commandMap.getMap());
         
-        mv.addObject("galleryList", galleryList);
+        mv.addObject("galleryList", galleryPagingList.get("result"));
         mv.addObject("paginationInfo", (PaginationInfo)galleryPagingList.get("paginationInfo"));
         return mv;
     }

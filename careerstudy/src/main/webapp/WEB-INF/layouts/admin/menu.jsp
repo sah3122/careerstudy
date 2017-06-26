@@ -85,10 +85,10 @@
                                     <a href="#">학생관리<span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">학생추가</a>
+                                            <a href="/admin/student/studentInsert.do">학생추가</a>
                                         </li>
                                         <li>
-                                            <a href="#">학생수정</a>
+                                            <a href="/admin/student/studentList.do">학생수정</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->

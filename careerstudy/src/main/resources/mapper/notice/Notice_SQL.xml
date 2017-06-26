@@ -13,6 +13,7 @@
             FROM
                 notice_board
             WHERE NOTICE_DELETE_AT = 'N'
+            ORDER BY NOTICE_IDX DESC
         ]]>
 	</select>
 	
@@ -40,6 +41,7 @@
 	            FROM
 	                notice_board , (SELECT @ROWNUM := 0) ROWNUM
 	            WHERE NOTICE_DELETE_AT = 'N'
+	            ORDER BY NOTICE_IDX DESC
 	     	) AA
 		) AAA
 		    limit #{START}, #{END};

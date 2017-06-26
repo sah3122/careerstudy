@@ -31,6 +31,13 @@
                 	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
                     <div class="tbl_head01 tbl_wrap">
                         <table>
+                        	<colgroup>
+                        		<col style="width:10%">
+                        		<col style="width:*">
+                        		<col style="width:15%">
+                        		<col style="width:17%">
+                        		<col style="width:10%">
+                        	</colgroup>
                             <caption>게시판 목록</caption>
                             <thead>
                                 <tr>

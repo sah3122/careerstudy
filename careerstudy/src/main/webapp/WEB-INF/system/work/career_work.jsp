@@ -57,7 +57,7 @@
 		<a href="#">슬라이더이미지에 담겨진 내용을 텍스트로 설명하기</a>
 	</div>
 </div>
-<div id="info_table">
+<!-- <div id="info_table">
 	<div class="t3">
 		<div class="tblWrap">
 			<table>
@@ -91,7 +91,7 @@
 			</table>
 		</div>
 	</div>
-</div>
+</div> -->
 <!--#info_table-->
 <!-- <div id="sns">
 	<div class="call">

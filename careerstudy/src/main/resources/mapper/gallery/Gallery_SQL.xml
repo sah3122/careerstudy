@@ -27,11 +27,11 @@
             FROM
                 gallery_board as B
             WHERE GALLERY_DELETE_AT = 'N'
+            ORDER BY GALLERY_IDX DESC
         ]]>
 	</select>
 	
 	<select id="selectGalleryPagingList" parameterType="hashmap" resultType="hashmap">
-        <![CDATA[
         SELECT
 		    AAA.*
 		FROM(
@@ -66,10 +66,13 @@
 	            FROM
 	                gallery_board as B , (SELECT @ROWNUM := 0) ROWNUM
 	            WHERE GALLERY_DELETE_AT = 'N'
+	            <if test="schoolIdx != null">
+	            	AND GALLERY_SCHOOL_IDX = #{schoolIdx}
+	            </if>
+	            ORDER BY GALLERY_IDX DESC
 	     	) AA
 		) AAA
 		    limit #{START}, #{END};
-        ]]>
 	</select>
 	
 	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">

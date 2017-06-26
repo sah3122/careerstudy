@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import career.common.common.CommandMap;
+import career.common.util.Session;
 import career.gallery.service.GalleryService;
 import career.video.service.VideoService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -25,7 +28,7 @@ public class VideoController {
     private VideoService videoService;
      
     @RequestMapping(value="/career/video/videoList.do")
-    public ModelAndView videoList(CommandMap commandMap) throws Exception{
+    public ModelAndView videoList(CommandMap commandMap, HttpServletRequest request) throws Exception{
     	ModelAndView mv = new ModelAndView("/career/video/video_list");
         
         if(commandMap.isEmpty() == false){
@@ -35,6 +38,13 @@ public class VideoController {
                 entry = iterator.next();
                 log.debug("key : "+entry.getKey()+", value : "+entry.getValue());
             }
+        }
+        HttpSession session = request.getSession(true);
+    	Session se = (Session) session.getAttribute("session");
+        if(se != null){
+        	commandMap.getMap().put("schoolIdx", se.getUserSchool());
+        } else {
+        	commandMap.getMap().put("schoolIdx", null);
         }
         
         List<Map<String, Object>> videoList = videoService.selectVideoList(commandMap.getMap());

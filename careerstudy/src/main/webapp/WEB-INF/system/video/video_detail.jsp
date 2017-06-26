@@ -2,9 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="http://mrhome.kr/gnuboard5/js/viewimageresize.js"></script>
-
+<%
+     //치환 변수 선언합니다.
+      pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
+      pageContext.setAttribute("br", "<br/>"); //br 태그
+%> 
 <!-- 게시물 읽기 시작 { -->
-
 <article id="bo_v" style="width: 100%">
 	<header>
 		<h1 id="bo_v_title">${videoData.VIDEO_TITLE}</h1>
@@ -17,19 +20,10 @@
 
 	<!-- 게시물 상단 버튼 시작 { -->
 	<div id="bo_v_top">
-		<!-- <ul class="bo_v_nb">
-			<li>
-				<a href="./board.php?bo_table=yunint_gallery&amp;wr_id=20" class="btn_b01">다음글</a>
-			</li>
-		</ul> -->
-
 		<ul class="bo_v_com">
 			<li>
 				<a href="/career/video/videoList.do" class="btn_b01">목록</a>
 			</li>
-			<!-- <li>
-				<a href="./write.php?bo_table=yunint_gallery" class="btn_b02">글쓰기</a>
-			</li> -->
 		</ul>
 	</div>
 	<!-- } 게시물 상단 버튼 끝 -->
@@ -44,7 +38,7 @@
 		</div>
 		<!-- 본문 내용 시작 { -->
 		<div id="bo_v_con">
-			${videoData.VIDEO_COMMENT}
+			${fn:replace(videoData.VIDEO_COMMENT, crcn, br)}
 		</div>
 		<!-- } 본문 내용 끝 -->
 		<!-- 스크랩 추천 비추천 시작 { -->

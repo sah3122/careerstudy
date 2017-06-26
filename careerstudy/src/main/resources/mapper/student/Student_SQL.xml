@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="student">
+	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                AREA_IDX,
+                AREA_NAME
+            FROM
+                area_info
+        ]]>
+    </select>
+    
+    <select id="selectStudentList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	USER_IDX,
+                USER_NAME,
+                (SELECT SCHOOL_NAME 
+                 FROM school_info 
+                 WHERE SCHOOL_IDX = USER_SCHOOL) as USER_SCHOOL,
+                (SELECT AREA_NAME 
+                 FROM area_info 
+                 WHERE AREA_IDX = USER_AREA) as USER_AREA,
+                USER_TEL_NUM,
+                USER_INSERT_DATE
+            FROM
+                career_user 
+            WHERE USER_CODE = '002'
+            AND USER_DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <select id="selectSchoolList" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                SCHOOL_IDX,
+                SCHOOL_NAME
+            FROM
+                school_info
+            WHERE SCHOOL_AREA = #{area_idx}
+        ]]>
+    </select>
+        
+    <select id="selectStudent" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	USER_IDX,
+            	USER_ID,
+                USER_NAME,
+                (SELECT SCHOOL_NAME 
+                 FROM school_info 
+                 WHERE SCHOOL_IDX = USER_SCHOOL) as USER_SCHOOL,
+                USER_AREA,
+                USER_TEL_NUM,
+                USER_EMAIL,
+                USER_INSERT_DATE
+            FROM
+                career_user 
+            WHERE USER_IDX = #{student_idx}
+            AND USER_DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <select id="selectSchoolData" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+            	SCHOOL_IDX
+            FROM
+                school_info 
+            WHERE SCHOOL_NAME = #{student_school}
+            AND SCHOOL_AREA = #{student_area}
+        ]]>
+    </select>
+    
+    <insert id="insertStudent" parameterType="hashmap" >
+    	<![CDATA[
+            INSERT 
+		  INTO career_user
+		       (
+		           USER_ID,
+		           USER_PW,
+		           USER_NAME,
+		           USER_TEL_NUM,
+		           USER_AREA,
+		           USER_EMAIL,
+		           USER_SCHOOL,
+		           USER_DELETE_AT,
+		           USER_CODE,
+		           USER_INSERT_DATE
+		       ) 
+		       VALUES
+		       (
+		           #{student_id},
+		           #{student_pass},
+		           #{student_name},
+		           #{student_tel},
+		           #{student_area},
+		           #{student_email},
+		           #{student_school},
+		           'N',
+		           '002',
+		           date_format(NOW(),'%Y-%m-%d')
+		       )  
+        ]]>
+    </insert>
+    
+	<select id="selectUserId" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            SELECT
+                USER_ID
+            FROM
+                career_user
+            WHERE USER_ID = #{student_id}
+            AND USER_DELETE_AT = 'N'
+        ]]>
+	</select>
+	
+	<update id="updateStudent" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	  	 	   <if test="password_check.equals('true')">
+	  	 	   USER_PW = #{student_pass},
+	  	 	   </if>
+	           USER_NAME = #{student_name},
+	           USER_TEL_NUM = #{student_tel},
+	           USER_EMAIL = #{student_email},
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{student_idx}	       
+    </update>
+    
+    <update id="deleteStudent" parameterType="hashmap" >  	
+         UPDATE career_user
+	  	 SET   
+	  	 	   USER_DELETE_AT = 'Y',
+	           USER_UPDATE_DATE = date_format(NOW(),'%Y-%m-%d')
+		WHERE USER_IDX = #{student_idx}	       
+    </update>
+</mapper>

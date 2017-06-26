@@ -26,11 +26,11 @@
             FROM
                 video_board as B
             WHERE VIDEO_DELETE_AT = 'N'
+            ORDER BY VIDEO_IDX DESC
         ]]>
 	</select>
 	
 	<select id="selectVideoPagingList" parameterType="hashmap" resultType="hashmap">
-        <![CDATA[
         SELECT
 		    AAA.*
 		FROM(
@@ -66,10 +66,13 @@
 	            FROM
 	                video_board as B , (SELECT @ROWNUM := 0) ROWNUM
 	            WHERE VIDEO_DELETE_AT = 'N'
+	            <if test="schoolIdx != null">
+	            	AND VIDEO_SCHOOL_IDX = #{schoolIdx}
+	            </if>
+	            ORDER BY VIDEO_IDX DESC
 	     	) AA
 		) AAA
 		    limit #{START}, #{END};
-        ]]>
 	</select>
 	
 	<select id="selectAreaList" parameterType="hashmap" resultType="hashmap">
