@@ -69,7 +69,7 @@
 			alert("이름을 입력 해주세요.");
 			return false;
 		}
-		if($("#sign_email").val() == ""){
+		/*if($("#sign_email").val() == ""){
 			alert("이메일을 입력 해주세요.");
 			return false;
 		}
@@ -80,7 +80,7 @@
 		if($("#sign_school").val() == "0"){
 			alert("학교를 선택 해주세요.");
 			return false;
-		}
+		}*/
 		$.ajax({
 		      type: "POST",
 		      url: "/sign/signUp.do",

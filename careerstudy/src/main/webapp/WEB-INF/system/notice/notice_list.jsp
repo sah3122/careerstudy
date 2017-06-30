@@ -50,7 +50,7 @@
 						    </thead>
 						    <tbody>
 						    	<c:choose>
-									<c:when test="${fn:length(noticeList) > 0}">
+									<c:when test="${fn:length(noticeList) > 0 && noticeList[0].TOTAL_COUNT ne 0}">
 										<c:forEach items="${noticeList}" var="row" varStatus="status">
 											<tr onclick="fn_notice_detail(${row.NOTICE_IDX})" style="cursor:pointer">
 												<td class="td_num">${fn:substringBefore(row.NOTICE_COUNT, '.') }</td>
@@ -63,7 +63,7 @@
 									</c:when>				
 									<c:otherwise>
 										<tr>
-											<td colspan="5">공지사항이 없습니다.</td>
+											<td colspan="5"  class="td_date">공지사항이 없습니다.</td>
 										</tr>
 									</c:otherwise>
 								</c:choose>
