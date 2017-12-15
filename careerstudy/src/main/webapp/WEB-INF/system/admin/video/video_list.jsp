@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">갤러리</h1>
+                <h1 class="page-header">동영상</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -43,7 +43,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    	갤러리 목록
+                    	동영상 목록
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -86,7 +86,7 @@
 								</c:when>				
 								<c:otherwise>
 									<tr>
-										<td colspan="8">사진이 없습니다.</td>
+										<td colspan="8">동영상이 없습니다.</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
